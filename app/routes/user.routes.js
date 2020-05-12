@@ -16,4 +16,5 @@ module.exports = function (app) {
   app.post("/api/user/profile", [authJwt.verifyUser], controller.userProfile);
 
   app.post("/api/user/verified", [authJwt.verifyUser], controller.userVerified);
+  app.post("/api/user/apartment", [authJwt.verifyUser], controller.userApartment);
 };

@@ -72,3 +72,26 @@ exports.userPreference = (req, res) => {
       });
     });
 };
+
+exports.userApartment = (req, res) => {
+  User.findOne({
+      where: {
+        email: req.body.email
+      },
+    })
+    .then((user) => {
+      res.status(200).send({
+        status: user.apartment == "null" ? false : true,
+        apartmentId: user.apartment,
+        flatmate: user.flatmate
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message,
+      });
+    });
+
+
+
+};

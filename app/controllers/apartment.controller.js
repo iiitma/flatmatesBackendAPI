@@ -27,6 +27,10 @@ exports.create = (req, res) => {
         amount: req.body.amount,
         bathroom: req.body.bathroom,
         bedroom: req.body.bedroom,
+        furnished: req.body.furnished,
+        agentid: req.body.agentid,
+        agentname: req.body.agentname,
+        images: req.body.images,
         paymentstyle: req.body.paymentstyle,
         queue: req.body.queue,
         published: req.body.published ? req.body.published : false,
@@ -49,16 +53,31 @@ exports.create = (req, res) => {
 // Retrieve all Apartments from the database.
 exports.findAll = (req, res) => {
     const location = req.query.location;
-    var condition = location ?
-        {
-            location: {
-                [Op.like]: `%${location}%`,
-            },
-        } :
-        null;
+    const published = 1;
+    const category = req.query.category;
+    var condition = published ? {
+        published: {
+            [Op.like]: `%${published}%`
+        }
+    } : null
+
+    if (req.query.category) {
+        condition.category = {
+            [Op.like]: `%${category}%`
+        }
+    }
+
+
+    if (req.query.location) {
+        condition.location = {
+            [Op.like]: `%${location}%`
+        }
+    }
+
+
 
     Apartment.findAll({
-            where: condition,
+            where: condition
         })
         .then((data) => {
             res.send(data);
@@ -80,7 +99,7 @@ exports.findOne = (req, res) => {
         })
         .catch((err) => {
             res.status(500).send({
-                message: "Error retrieving Tutorial with id=" + id,
+                message: "Not Found",
             });
         });
 };
@@ -144,9 +163,19 @@ exports.deleteAll = (req, res) => {};
 
 // Find all published Apartments
 exports.findAllPublished = (req, res) => {
+
+    const published = 1;
+
+    var condition = published ? {
+
+            published: {
+                [Op.like]: `%${published}%`,
+            }
+        } :
+        null;
     Apartment.findAll({
             where: {
-                published: true,
+                condition
             },
         })
         .then((data) => {

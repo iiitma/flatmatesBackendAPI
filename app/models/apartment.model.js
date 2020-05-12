@@ -33,6 +33,18 @@ module.exports = (sequelize, Sequelize) => {
         bedroom: {
             type: Sequelize.STRING
         },
+        furnished: {
+            type: Sequelize.STRING
+        },
+        images: {
+            type: Sequelize.STRING
+        },
+        agentid: {
+            type: Sequelize.STRING
+        },
+        agentname: {
+            type: Sequelize.STRING
+        },
         paymentstyle: {
             type: Sequelize.STRING
         },
@@ -46,6 +58,9 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
         },
         cta: {
+            type: Sequelize.STRING
+        },
+        tenants: {
             type: Sequelize.STRING
         }
 
